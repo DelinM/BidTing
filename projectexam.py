@@ -567,6 +567,5 @@ client_2 = [
     ['City of Hamilton', 'https://hamilton.bidsandtenders.ca/']
 ]
 
-print('sure')
 BidTenders_AwardProjects(path, 'York Region', 'https://york.bidsandtenders.ca/', 100, 0)
 
