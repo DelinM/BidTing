@@ -449,7 +449,6 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
          'submitted_price',
          'winning_status']
     ]
-
     # Patch 0.5: Code to get to the right page
 
     if page != 0:
@@ -571,7 +570,6 @@ client = [
     ['County of Northumberland', 'https://northumberlandcounty.bidsandtenders.ca/'],
     ['City of Hamilton', 'https://hamilton.bidsandtenders.ca/']
 ]
-
 
 client_2 = [
     ['City of Orillia', 'https://orillia.bidsandtenders.ca/'],
