@@ -5,8 +5,8 @@ import time
 
 start = time.time()
 webdriver = 'firefox'
-url = 'https://york.bidsandtenders.ca/Module/Tenders/en'
-client_name = 'York Region'
+url = 'https://haltonregion.bidsandtenders.ca/'
+client_name = 'Halton Region'
 
 
 path = bt.get_path_webdriver(webdriver)
@@ -24,13 +24,12 @@ time.sleep(10)
 page_start = 0
 
 for i in range(page_start, page_number, 1):
-    time.sleep(30)
+    '''time buffer added, to be removed.'''
+    time.sleep(10)
 
     '''below included if page_start is not 0, for future implementation'''
     if i == page_start and page_start != 0:
-        time.sleep(20)
-
-
+        time.sleep(10)
 
     list_projectname = []
     list_projectweb = []

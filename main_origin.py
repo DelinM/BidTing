@@ -522,7 +522,6 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
                     # access and append list_project
                     print(result[0])
                     list_projects.append(result[0])
-
                     # access and append list_submitter
                     for item in result[1]:
                         list_projectsubmitters.append(item)
