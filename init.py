@@ -8,7 +8,7 @@ webdriver = 'firefox'
 url = 'https://haltonregion.bidsandtenders.ca/'
 client_name = 'Halton Region'
 
-
+print('client_name')
 path = bt.get_path_webdriver(webdriver)
 driver = bt.get_driver(path)
 driver.get(url)

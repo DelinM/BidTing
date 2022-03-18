@@ -113,5 +113,3 @@ def get_projects_basicinformation(basiccontainer, url, clientname, list_projectn
         list_projectweb.append(project_website)
         list_clientname.append(clientname)
         print(project_website)
-
-def

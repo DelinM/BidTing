@@ -1,6 +1,5 @@
 import os
 
-
 def get_currentpath():
     return os.getcwd()
 
