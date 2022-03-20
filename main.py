@@ -7,7 +7,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.firefox.service import Service
 
-
 import time
 from bs4 import BeautifulSoup as soup
 import lxml
@@ -25,6 +24,7 @@ def emailsender(sender, sender_password, receiver, message):
         server.login(sender, sender_password)
         server.sendmail(sender, receiver, message)
 
+
 def dy_pageextraction(url, sleeptime):
     """
     Extract HTML for dynamic website, aka JS
@@ -40,12 +40,13 @@ def dy_pageextraction(url, sleeptime):
     options.add_argument('--ignore_certificate-error')
     e_path = Service('C:/Users/PC/PycharmProjects/pythonProject/venv/chromedriver')
 
-    drive = webdriver.Chrome(service = e_path, options=options)
+    drive = webdriver.Chrome(service=e_path, options=options)
     drive.get(url)
     time.sleep(sleeptime)
     html = drive.page_source
     drive.close()
     return html
+
 
 def BidsTenders_projecttype(url):
     from bs4 import BeautifulSoup as soup
@@ -55,6 +56,7 @@ def BidsTenders_projecttype(url):
     bid_type = bid_type.find_all('td')[3].contents[0].strip()
 
     return bid_type
+
 
 def BidsTenders_Extraction_OpenProjectTesting(url, client_name):
     list = []
@@ -79,15 +81,14 @@ def BidsTenders_Extraction_OpenProjectTesting(url, client_name):
 
     return list
 
-def excel_generator(list, filename):
-    import \
-        xlsxwriter
 
+def excel_generator(list, filename):
     import pandas as pd
     df = pd.DataFrame(list)
     writer = pd.ExcelWriter(filename, engine='xlsxwriter')
     df.to_excel(writer, sheet_name='output', index=False)
     writer.save()
+
 
 def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
     '''
@@ -139,7 +140,7 @@ def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
     # web checking:
     error = str(soup_ob.find_all('body')[0].contents[0])
     if 'error' in error:
-        return [client_name, project_name,'','','','','','','','','','']
+        return [client_name, project_name, '', '', '', '', '', '', '', '', '', '']
 
     else:
 
@@ -155,7 +156,6 @@ def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
             output_bid_classification = bid_classification[0]
             output_bid_classification = output_bid_classification.contents[0]
 
-
         # for loop to extract bid type, bid ID, bid name, bid date, and bid year
         project_infobox = project_information.find_all('td')
 
@@ -170,23 +170,24 @@ def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
             if len(project_infobox[p].contents) != 0:
 
                 if 'Bid Type' in project_infobox[p].contents[0]:
-                    output_bid_type = project_infobox[p+1].contents[0].strip()
+                    output_bid_type = project_infobox[p + 1].contents[0].strip()
 
 
                 elif 'Bid Number' in project_infobox[p].contents[0]:
-                    output_bid_id = project_infobox[p+1].contents[0].strip()
+                    output_bid_id = project_infobox[p + 1].contents[0].strip()
 
 
                 elif 'Bid Name' in project_infobox[p].contents[0]:
-                    output_projectname = project_infobox[p+1].contents[0].strip().title()
+                    output_projectname = project_infobox[p + 1].contents[0].strip().title()
 
 
                 elif 'Awarded Date' in project_infobox[p].contents[0]:
-                    awarded_time = project_infobox[p+1].contents[0].split()
+                    awarded_time = project_infobox[p + 1].contents[0].split()
                     output_awarded_date = awarded_time[1] + ' ' + awarded_time[2].rstrip(',')
                     output_awarded_year = awarded_time[3]
 
-                elif output_awarded_date =='' and output_awarded_year == '' and 'Bid Closing Date' in project_infobox[p].contents[0]:
+                elif output_awarded_date == '' and output_awarded_year == '' and 'Bid Closing Date' in \
+                        project_infobox[p].contents[0]:
                     awarded_time = project_infobox[p + 1].contents[0].split()
                     output_awarded_date = awarded_time[1] + ' ' + awarded_time[2].rstrip(',')
                     output_awarded_year = awarded_time[3]
@@ -197,13 +198,14 @@ def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
         awarded_company_table = soup_ob.find_all('div', {'id': 'dgAwarded_Container'})
         if len(awarded_company_table) == 0:
             output_no_winner = 0
-            output_winnercompany_name =''
+            output_winnercompany_name = ''
             output_winnerprice = ''
 
         else:
             awarded_company_table = awarded_company_table[0]
             awarded_company_names = awarded_company_table.find_all('div',
-                                                                   {'class': 'x-grid3-cell-inner x-grid3-col-CompanyName'})
+                                                                   {
+                                                                       'class': 'x-grid3-cell-inner x-grid3-col-CompanyName'})
             output_no_winner = 0
             output_winnercompany_name = ''
             for company_name in awarded_company_names:
@@ -219,9 +221,8 @@ def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
 
             if output_no_winner == 1:
                 output_winnerprice = awarded_company_table.find_all('div',
-                                                                   {'class': 'x-grid3-cell-inner x-grid3-col-Value'})
+                                                                    {'class': 'x-grid3-cell-inner x-grid3-col-Value'})
                 output_winnerprice = output_winnerprice[0].contents[0]
-
 
         # receive plan takers' names, they will be organized in a string, and return how many takers
 
@@ -249,7 +250,6 @@ def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
             submitted_company_price = submitted_company_table.find_all('div', {
                 'class': 'x-grid3-cell-inner x-grid3-col-VerifiedValue'})
 
-
             output_no_submitted = 0
             output_submitted_name = ''
 
@@ -261,7 +261,7 @@ def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
                     for value in element:
                         sum += str(value)
                     if '<br/>' in sum:
-                        sum = sum.replace('<br/>','')
+                        sum = sum.replace('<br/>', '')
                     list_submitted_price.append(sum.strip())
                 else:
                     list_submitted_price.append(element.contents[0].strip())
@@ -320,9 +320,10 @@ def BidsTenders_Extraction_AwardedProject(project_name, client_name, url):
                         output_no_submitted,
                         output_submitted_name]
 
-        project_list = [list_project,list_submitter]
+        project_list = [list_project, list_submitter]
 
         return project_list
+
 
 def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
     '''
@@ -396,7 +397,7 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
         )
         button_bidtype.click()
     finally:
-        #li = button_bidtype.parent.find_elements_by_tag_name('li') superceded
+        # li = button_bidtype.parent.find_elements_by_tag_name('li') superceded
         li = button_bidtype.parent.find_elements(by=By.TAG_NAME, value='li')
         time.sleep(3)
         li[5].click()
@@ -408,7 +409,7 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
         )
         button_limitresults.click()
     finally:
-        #li_2 = button_limitresults.find_elements_by_tag_name('li')
+        # li_2 = button_limitresults.find_elements_by_tag_name('li')
         li_2 = button_limitresults.find_elements(by=By.TAG_NAME, value='li')
         li_2[3].click()
 
@@ -416,7 +417,7 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
     # code below to find the page number`
 
     time.sleep(7)
-    #page_number = driver.find_element_by_class_name('repeater-pages')
+    # page_number = driver.find_element_by_class_name('repeater-pages')
     page_number = driver.find_element(by=By.CLASS_NAME, value='repeater-pages')
     page_number = int(page_number.text)
     print(page_number)
@@ -453,11 +454,10 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
 
     if page != 0:
         for i in range(page):
-                time.sleep(15)
-                #button_next = driver.find_element_by_css_selector('.btn.btn-default.repeater-next')
-                button_next = driver.find_element(by=By.CSS_SELECTOR, value='.btn.btn-default.repeater-next')
-                button_next.click()
-
+            time.sleep(15)
+            # button_next = driver.find_element_by_css_selector('.btn.btn-default.repeater-next')
+            button_next = driver.find_element(by=By.CSS_SELECTOR, value='.btn.btn-default.repeater-next')
+            button_next.click()
 
     # code below to iterate through the page
     time.sleep(7)
@@ -478,17 +478,16 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
         project_container_inner = project_container.find_all('div', {'style': 'float:right;'})
 
         if _ < page_number - 1:
-            #button_next = driver.find_element_by_css_selector('.btn.btn-default.repeater-next')
+            # button_next = driver.find_element_by_css_selector('.btn.btn-default.repeater-next')
             button_next = driver.find_element(by=By.CSS_SELECTOR, value='.btn.btn-default.repeater-next')
             button_next.click()
-
 
         # patch 0.3 notes: two loops
         # first loop: extract all project name and project web
         # second loop: (cocurrent processing)
         list_projectname = []
         list_projectweb = []
-        list_clientname =[]
+        list_clientname = []
 
         for project in project_container_inner:
             # receive project name
@@ -501,7 +500,7 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
             list_projectweb.append(project_website)
             list_clientname.append(clientname)
 
-        print('LIST OF ALL PROJECT NAME: ',list_projectname)
+        print('LIST OF ALL PROJECT NAME: ', list_projectname)
 
         # ask for program to process 'jump' at one time, chunk the list
         list_projectname = [list_projectname[x:x + jump] for x in range(0, len(list_projectname), jump)]
@@ -511,11 +510,10 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
         for list_chunk_num in range(len(list_projectname)):
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 results = executor.map(BidsTenders_Extraction_AwardedProject, list_projectname[list_chunk_num],
-                                       list_clientname[list_chunk_num],list_projectweb[list_chunk_num])
+                                       list_clientname[list_chunk_num], list_projectweb[list_chunk_num])
 
                 # results is a list of [list_project, [list_submitter]]
                 # position 0: list_project  position 1: list_submitter
-
 
                 for result in results:
 
@@ -530,12 +528,12 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
         print('list is printing:', list_projects)
 
         # export data to excel
-        excel_generator(list_projects, '{}_projectoutput_{}.xlsx'.format(clientname,_+1))
+        excel_generator(list_projects, '{}_projectoutput_{}.xlsx'.format(clientname, _ + 1))
         excel_generator(list_projectsubmitters, '{}_submitteroutput_{}.xlsx'.format(clientname, _ + 1))
 
-        print('The page {} is completed'.format(_+1))
+        print('The page {} is completed'.format(_ + 1))
         end = time.time()
-        print('Run time is', end-start)
+        print('Run time is', end - start)
 
     driver.quit()
 
@@ -543,7 +541,6 @@ def BidTenders_AwardProjects(webdriver_address, clientname, url, jump, page):
 # codes below us Chrome
 
 path = 'C:/Users/PC/PycharmProjects/pythonProject/venv/geckodriver.exe'
-
 
 # waterloo has issue.
 
@@ -582,4 +579,3 @@ client_2 = [
 ]
 
 BidTenders_AwardProjects(path, 'Durham Region', 'https://durham.bidsandtenders.ca/', 100, 0)
-

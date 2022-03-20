@@ -123,6 +123,7 @@ def get_projects_basicinformation(basiccontainer, url, clientname, list_projectn
         list_clientname.append(clientname)
         print(project_website)
 
+
 def get_projects(url, driver, page_number, page_start, client_name):
     list_projectname = []
     list_projectweb = []
@@ -138,7 +139,7 @@ def get_projects(url, driver, page_number, page_start, client_name):
 
         project_container = get_projects_basiccontainer(driver)
         get_projects_basicinformation(project_container, url, client_name, list_projectname, list_projectweb,
-                                         list_clientname)
+                                      list_clientname)
 
         if i < page_number - 1:
             click_button_nextpage(driver)
@@ -151,7 +152,7 @@ def get_projects(url, driver, page_number, page_start, client_name):
 def get_project_biddinginformation(project_name, client_name, url):
     '''
     start development: Feb 19th, 2021
-    end development: ?????
+    end development: Mar 20th, 2022
 
     Purpose: extract a AWARDED project information when a AWARDED project url is provided. The function will return
     a list of AWARDED project information.
@@ -189,15 +190,16 @@ def get_project_biddinginformation(project_name, client_name, url):
     vice versa.
     2. list_submitter can supersede the list_project
 
+    Patch 1.0 - Final Update for BidTing -  March 20th, 2021
+
 
     '''
     from bs4 import BeautifulSoup as soup
 
-
     # receive HTML using selenium chrome
     webdriver = 'chrome'
     path = get_path_webdriver(webdriver)
-    driver = get_driver(path, headless=False)
+    driver = get_driver(path, headless=True)
     driver.get(url)
     time.sleep(0)
     html = driver.page_source
@@ -208,7 +210,7 @@ def get_project_biddinginformation(project_name, client_name, url):
     # web checking:
     error = str(soup_ob.find_all('body')[0].contents[0])
     if 'error' in error:
-        return [client_name, project_name,'','','','','','','','','','']
+        return [client_name, project_name, '', '', '', '', '', '', '', '', '', '']
 
     else:
 
@@ -224,9 +226,9 @@ def get_project_biddinginformation(project_name, client_name, url):
             output_bid_classification = bid_classification[0]
             output_bid_classification = output_bid_classification.contents[0]
 
-
         # for loop to extract bid type, bid ID, bid name, bid date, and bid year
-        project_infobox = project_information.find_all('td')
+
+        project_infobox = project_information.find_all('tr')
 
         # set initial value for all output values
         output_bid_type = ''
@@ -234,29 +236,28 @@ def get_project_biddinginformation(project_name, client_name, url):
         output_projectname = ''
         output_awarded_date = ''
         output_awarded_year = ''
+
         for p in range(len(project_infobox)):
 
             if len(project_infobox[p].contents) != 0:
+                if 'Bid Type' in str(project_infobox[p].contents[1]):
+                    output_bid_type = project_infobox[p].find_all('td')
+                    output_bid_type = output_bid_type[0].contents[0].strip()
 
-                if 'Bid Type' in project_infobox[p].contents[0]:
-                    output_bid_type = project_infobox[p+1].contents[0].strip()
+                elif 'Bid Number' in str(project_infobox[p].contents[1]):
+                    output_bid_id = project_infobox[p].find_all('td')
+                    output_bid_id = output_bid_id[0].contents[0].strip()
 
-
-                elif 'Bid Number' in project_infobox[p].contents[0]:
-                    output_bid_id = project_infobox[p+1].contents[0].strip()
-
-
-                elif 'Bid Name' in project_infobox[p].contents[0]:
-                    output_projectname = project_infobox[p+1].contents[0].strip().title()
-
-
-                elif 'Awarded Date' in project_infobox[p].contents[0]:
-                    awarded_time = project_infobox[p+1].contents[0].split()
+                elif 'Awarded Date' in str(project_infobox[p].contents[1]):
+                    awarded_time = project_infobox[p].find_all('td')
+                    awarded_time = awarded_time[0].contents[0].split()
                     output_awarded_date = awarded_time[1] + ' ' + awarded_time[2].rstrip(',')
                     output_awarded_year = awarded_time[3]
 
-                elif output_awarded_date =='' and output_awarded_year == '' and 'Bid Closing Date' in project_infobox[p].contents[0]:
-                    awarded_time = project_infobox[p + 1].contents[0].split()
+                elif output_awarded_date == '' and output_awarded_year == '' and 'Bid Closing Date' in str(
+                        project_infobox[p].contents[0]):
+                    awarded_time = project_infobox[p].find_all('td')
+                    awarded_time = awarded_time[0].contents[0].split()
                     output_awarded_date = awarded_time[1] + ' ' + awarded_time[2].rstrip(',')
                     output_awarded_year = awarded_time[3]
 
@@ -266,13 +267,14 @@ def get_project_biddinginformation(project_name, client_name, url):
         awarded_company_table = soup_ob.find_all('div', {'id': 'dgAwarded_Container'})
         if len(awarded_company_table) == 0:
             output_no_winner = 0
-            output_winnercompany_name =''
+            output_winnercompany_name = ''
             output_winnerprice = ''
 
         else:
             awarded_company_table = awarded_company_table[0]
             awarded_company_names = awarded_company_table.find_all('div',
-                                                                   {'class': 'x-grid3-cell-inner x-grid3-col-CompanyName'})
+                                                                   {
+                                                                       'class': 'x-grid3-cell-inner x-grid3-col-CompanyName'})
             output_no_winner = 0
             output_winnercompany_name = ''
             for company_name in awarded_company_names:
@@ -288,9 +290,8 @@ def get_project_biddinginformation(project_name, client_name, url):
 
             if output_no_winner == 1:
                 output_winnerprice = awarded_company_table.find_all('div',
-                                                                   {'class': 'x-grid3-cell-inner x-grid3-col-Value'})
+                                                                    {'class': 'x-grid3-cell-inner x-grid3-col-Value'})
                 output_winnerprice = output_winnerprice[0].contents[0]
-
 
         # receive plan takers' names, they will be organized in a string, and return how many takers
 
@@ -302,7 +303,7 @@ def get_project_biddinginformation(project_name, client_name, url):
             output_no_submitted = 0
             output_submitted_name = ''
             list_submitter.append([client_name,
-                                   output_projectname,
+                                   project_name,
                                    output_bid_classification,
                                    output_bid_type,
                                    output_bid_id,
@@ -318,7 +319,6 @@ def get_project_biddinginformation(project_name, client_name, url):
             submitted_company_price = submitted_company_table.find_all('div', {
                 'class': 'x-grid3-cell-inner x-grid3-col-VerifiedValue'})
 
-
             output_no_submitted = 0
             output_submitted_name = ''
 
@@ -330,7 +330,7 @@ def get_project_biddinginformation(project_name, client_name, url):
                     for value in element:
                         sum += str(value)
                     if '<br/>' in sum:
-                        sum = sum.replace('<br/>','')
+                        sum = sum.replace('<br/>', '')
                     list_submitted_price.append(sum.strip())
                 else:
                     list_submitted_price.append(element.contents[0].strip())
@@ -359,7 +359,7 @@ def get_project_biddinginformation(project_name, client_name, url):
                         output_winnerstatus = 1
                 # Patch 0.6: write into submitter's list
                 list_submitter.append([client_name,
-                                       output_projectname,
+                                       project_name,
                                        output_bid_classification,
                                        output_bid_type,
                                        output_bid_id,
@@ -377,7 +377,7 @@ def get_project_biddinginformation(project_name, client_name, url):
             output_submitted_name = output_submitted_name.rstrip(', ')
 
         list_project = [client_name,
-                        output_projectname,
+                        project_name,
                         output_bid_classification,
                         output_bid_type,
                         output_bid_id,
@@ -389,7 +389,40 @@ def get_project_biddinginformation(project_name, client_name, url):
                         output_no_submitted,
                         output_submitted_name]
 
-        project_list = [list_project,list_submitter]
+        project_list = [list_project, list_submitter]
 
         return project_list
+
+
+def get_csv(list, filename):
+    import pandas as pd
+    df = pd.DataFrame(list)
+    df.to_csv(filename, index=False, header=False)
+
+def cocurrent_webscraping(empty_projects, empty_projectsubmitters, jump, projects_info):
+    list_projectname = projects_info[0]
+    list_projectweb = projects_info[1]
+    list_clientname = projects_info[2]
+
+    list_projectname = [list_projectname[x:x + jump] for x in range(0, len(list_projectname), jump)]
+    list_projectweb = [list_projectweb[x:x + jump] for x in range(0, len(list_projectweb), jump)]
+    list_clientname = [list_clientname[x:x + jump] for x in range(0, len(list_clientname), jump)]
+
+    for list_chunk_num in range(len(list_projectname)):
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            results = executor.map(get_project_biddinginformation, list_projectname[list_chunk_num],
+                                   list_clientname[list_chunk_num], list_projectweb[list_chunk_num])
+
+            # results is a list of [list_project, [list_submitter]]
+            # position 0: list_project  position 1: list_submitter
+
+            for result in results:
+
+                # access and append list_project
+                print(result[0])
+                empty_projects.append(result[0])
+
+                # access and append list_submitter
+                for item in result[1]:
+                    empty_projectsubmitters.append(item)
 
