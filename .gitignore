@@ -9,7 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
-develop-eggs/
+develop-eggs/x
 dist/
 downloads/
 eggs/
@@ -137,5 +137,3 @@ geckodriver.exe
 
 # others
 LICENSE
-/GMBlueplan_Interview
-/PreviousScrapingData
