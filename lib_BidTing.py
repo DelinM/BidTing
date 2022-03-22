@@ -6,7 +6,7 @@ import concurrent.futures
 import time
 from bs4 import BeautifulSoup as bs
 
-import system_access as sa
+import lib_system_access as sa
 
 
 def get_path_webdriver(driver):
@@ -89,9 +89,9 @@ def click_button_page100(driver):
 
 def get_driverpagenumber(driver):
     page_number = driver.find_element(by=By.CLASS_NAME, value='repeater-pages')
-    print(page_number)
     page_number = int(page_number.text)
     if page_number >= 0:
+        print('BidTing identified {} to be scrapped.\n'.format(page_number))
         return page_number
     else:
         raise Exception('Error: Page number cannot be extracted (get_driverpagenumber)')
@@ -121,7 +121,7 @@ def get_projects_basicinformation(basiccontainer, url, clientname, list_projectn
         list_projectname.append(project_name)
         list_projectweb.append(project_website)
         list_clientname.append(clientname)
-        print(project_website)
+        # print(project_website)
 
 
 def get_projects(url, driver, page_number, page_start, client_name):
@@ -399,6 +399,7 @@ def get_csv(list, filename):
     df = pd.DataFrame(list)
     df.to_csv(filename, index=False, header=False)
 
+
 def cocurrent_webscraping(empty_projects, empty_projectsubmitters, jump, projects_info):
     list_projectname = projects_info[0]
     list_projectweb = projects_info[1]
@@ -425,4 +426,3 @@ def cocurrent_webscraping(empty_projects, empty_projectsubmitters, jump, project
                 # access and append list_submitter
                 for item in result[1]:
                     empty_projectsubmitters.append(item)
-
