@@ -137,3 +137,5 @@ geckodriver.exe
 
 # others
 LICENSE
+.DS_Store
+.gitattributes
