@@ -5,16 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bff2350-cd16-4b52-a212-a1dad83c6a0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/DataExplore.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/csv-plugin.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/datacleaning.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/dataresource.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataExplore.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NaturalLanguageProcessing/Data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/Data.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NaturalLanguageProcessing/DataExplore.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/DataExplore.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,7 +60,7 @@
       <option name="presentableId" value="Default" />
       <updated>1671379749943</updated>
       <workItem from="1671379752821" duration="2268000" />
-      <workItem from="1671390286735" duration="687000" />
+      <workItem from="1671390286735" duration="6648000" />
     </task>
     <servers />
   </component>
