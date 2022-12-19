@@ -5,10 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bff2350-cd16-4b52-a212-a1dad83c6a0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/datacleaning.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/dataresource.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NaturalLanguageProcessing/Data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/Data.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NaturalLanguageProcessing/DataExplore.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/DataExplore.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +57,7 @@
       <updated>1671379749943</updated>
       <workItem from="1671379752821" duration="2268000" />
       <workItem from="1671390286735" duration="6648000" />
+      <workItem from="1671401022214" duration="216000" />
     </task>
     <servers />
   </component>
