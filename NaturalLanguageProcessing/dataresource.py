@@ -56,3 +56,39 @@ bid_type_Standard = {'Pre-Qualification': "Request for Pre-Qualification(RFPQ)",
                      'DN': "Request for Quotation(RFQ)",
                      'VOR': "Request for Proposal(RFP)",
                      'RFO': 'Others'}
+
+# a "soft standard" that does not remove too many categories
+
+bid_category_Standard = {'Construction - Facility': 'Construction - Facility',
+                         'Construction - Fibre Optic Cable': 'Construction - Fibre Optic Cable',
+                         'Construction - Landscaping': 'Construction - Landscaping',
+                         'Construction - Road': 'Construction - Road',
+                         'Construction - Water Wastewater Linear': 'Construction - Water Wastewater Linear',
+                         'Construction - Water Wastewater Vertical': 'Construction - Water Wastewater Vertical',
+                         'Consulting - Facility': 'Consulting - Facility',
+                         'Consulting - Geotechnical/Environmental': 'Consulting - Geotechnical/Environmental/Landscaping',
+                         'Consulting - Landscaping': 'Consulting - Geotechnical/Environmental/Landscaping',
+                         'Consulting - Others': 'Consulting - Others',
+                         'Consulting - Software Services': 'Consulting - Others',
+                         'Consulting - Transportation Bridge': 'Consulting - Transportation Bridge',
+                         'Consulting - Transportation Road/Trainsit': 'Consulting - Transportation Road/Trainsit',
+                         'Consulting - Water Wastewater Linear': 'Consulting - Water Wastewater Linear',
+                         'Consulting - Water Wastewater Vertical': 'Consulting - Water Wastewater Vertical',
+                         'Producer/Supplier': 'Producer/Supplier'
+                         }
+
+bid_category_numbering = {'Construction - Facility': 1,
+                          'Construction - Fibre Optic Cable': 2,
+                          'Construction - Landscaping': 3,
+                          'Construction - Road': 4,
+                          'Construction - Water Wastewater Linear': 5,
+                          'Construction - Water Wastewater Vertical': 6,
+                          'Consulting - Facility': 7,
+                          'Consulting - Geotechnical/Environmental/Landscaping': 8,
+                          'Consulting - Others': 9,
+                          'Consulting - Transportation Bridge': 10,
+                          'Consulting - Transportation Road/Trainsit': 11,
+                          'Consulting - Water Wastewater Linear': 12,
+                          'Consulting - Water Wastewater Vertical': 13,
+                          'Producer/Supplier': 14
+                          }
