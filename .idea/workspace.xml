@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7bff2350-cd16-4b52-a212-a1dad83c6a0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NaturalLanguageProcessing/Project Category Identification NLP Project.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/Project Category Identification NLP Project.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NaturalLanguageProcessing/datacleaning.py" beforeDir="false" afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/datacleaning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NaturalLanguageProcessing/dataresource.py" beforeDir="false" afterPath="$PROJECT_DIR$/NaturalLanguageProcessing/dataresource.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
