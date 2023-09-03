@@ -364,7 +364,7 @@ def get_project_biddinginformation(project_name, client_name, url):
                 # Patch 0.6: write into submitter's list
                 list_submitter.append([client_name,
                                        project_name,
-                                       output_bid_classification,
+                                       output_bid_classification.strip(),
                                        output_bid_type,
                                        output_bid_id,
                                        output_awarded_date,
