@@ -50,7 +50,7 @@ def get_projects(projects_info, client_name):
 
 
 def main():
-    webdriver, url, client_name = get_inputs()
+    webdriver, url, client_name = 'chrome', 'https://york.bidsandtenders.ca/', 'York'
     projects_info = get_projectsweb(webdriver, url, client_name)
     get_projects(projects_info, client_name)
 

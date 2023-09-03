@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import concurrent.futures
 import time
 from bs4 import BeautifulSoup as bs
+import lxml
+import pandas as pd
 
 import lib_system_access as sa
 
@@ -42,7 +44,7 @@ def get_driver(path, headless):
         options = webdriver.ChromeOptions()
         if headless:
             options.add_argument('--headless')
-        options.add_argument('--incognito')
+        # options.add_argument('--incognito')
         options.add_argument('--ignore_certificate-error')
         chr_service = Service(path)
         driver = webdriver.Chrome(service=chr_service, options=options)
@@ -68,7 +70,7 @@ def click_button_awarded(driver):
     finally:
         li = button_bidtype.parent.find_elements(by=By.TAG_NAME, value='li')
         time.sleep(3)
-        li[5].click()
+        li[8].click()
 
     time.sleep(5)
 
@@ -92,9 +94,11 @@ def get_driverpagenumber(driver):
     page_number = int(page_number.text)
     if page_number >= 0:
         print('BidTing identified {} to be scrapped.\n'.format(page_number))
+        time.sleep(40)
         return page_number
     else:
         raise Exception('Error: Page number cannot be extracted (get_driverpagenumber)')
+
 
 
 def click_button_nextpage(driver):
@@ -105,7 +109,7 @@ def click_button_nextpage(driver):
 def get_projects_basiccontainer(driver):
     from bs4 import BeautifulSoup as soup
     html = driver.page_source
-    soup_projects = soup(html, 'html5lib')
+    soup_projects = soup(html, 'lxml')
     project_container = soup_projects.find_all('tbody')[0]
     project_container_inner = project_container.find_all('div', {'style': 'float:right;'})
     return project_container_inner
@@ -129,7 +133,7 @@ def get_projects(url, driver, page_number, page_start, client_name):
     list_projectweb = []
     list_clientname = []
 
-    for i in range(page_start, page_number, 1):
+    for i in range(page_start, 2, 1):
         '''time buffer added, to be removed.'''
         time.sleep(10)
 
@@ -144,7 +148,7 @@ def get_projects(url, driver, page_number, page_start, client_name):
         if i < page_number - 1:
             click_button_nextpage(driver)
 
-    driver.quit()
+    # driver.quit()
 
     return (list_projectname, list_projectweb, list_clientname)
 
@@ -203,7 +207,7 @@ def get_project_biddinginformation(project_name, client_name, url):
     driver.get(url)
     time.sleep(0)
     html = driver.page_source
-    driver.close()
+    # driver.close()
 
     soup_ob = soup(html, 'html.parser')
 
@@ -395,7 +399,6 @@ def get_project_biddinginformation(project_name, client_name, url):
 
 
 def get_csv(list, filename):
-    import pandas as pd
     df = pd.DataFrame(list)
     df.to_csv(filename, index=False, header=False)
 
