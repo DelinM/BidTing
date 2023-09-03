@@ -128,12 +128,12 @@ def get_projects_basicinformation(basiccontainer, url, clientname, list_projectn
         # print(project_website)
 
 
-def get_projects(url, driver, page_number, page_start, client_name):
+def get_projects(url, driver, page_number, page_start, client_name, page_end):
     list_projectname = []
     list_projectweb = []
     list_clientname = []
 
-    for i in range(page_start, 2, 1):
+    for i in range(page_start, page_end, 1):
         '''time buffer added, to be removed.'''
         time.sleep(10)
 
@@ -153,7 +153,7 @@ def get_projects(url, driver, page_number, page_start, client_name):
     return (list_projectname, list_projectweb, list_clientname)
 
 
-def get_project_biddinginformation(project_name, client_name, url):
+def get_project_biddinginformation(driver, project_name, client_name, url):
     '''
     start development: Feb 19th, 2021
     end development: Mar 20th, 2022
@@ -201,9 +201,6 @@ def get_project_biddinginformation(project_name, client_name, url):
     from bs4 import BeautifulSoup as soup
 
     # receive HTML using selenium chrome
-    webdriver = 'chrome'
-    path = get_path_webdriver(webdriver)
-    driver = get_driver(path, headless=True)
     driver.get(url)
     time.sleep(0)
     html = driver.page_source
@@ -403,7 +400,7 @@ def get_csv(list, filename):
     df.to_csv(filename, index=False, header=False)
 
 
-def cocurrent_webscraping(empty_projects, empty_projectsubmitters, jump, projects_info):
+def cocurrent_webscraping(empty_projects, empty_projectsubmitters, jump, projects_info, driver):
     list_projectname = projects_info[0]
     list_projectweb = projects_info[1]
     list_clientname = projects_info[2]
@@ -411,10 +408,11 @@ def cocurrent_webscraping(empty_projects, empty_projectsubmitters, jump, project
     list_projectname = [list_projectname[x:x + jump] for x in range(0, len(list_projectname), jump)]
     list_projectweb = [list_projectweb[x:x + jump] for x in range(0, len(list_projectweb), jump)]
     list_clientname = [list_clientname[x:x + jump] for x in range(0, len(list_clientname), jump)]
+    list_driver = [driver] * len(list_projectname)
 
     for list_chunk_num in range(len(list_projectname)):
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            results = executor.map(get_project_biddinginformation, list_projectname[list_chunk_num],
+            results = executor.map(get_project_biddinginformation, list_driver, list_projectname[list_chunk_num],
                                    list_clientname[list_chunk_num], list_projectweb[list_chunk_num])
 
             # results is a list of [list_project, [list_submitter]]
